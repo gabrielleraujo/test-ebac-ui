@@ -11,20 +11,17 @@ context("Funcionalidade Login", () => {
         //cy.screenshot()
     });
 
-    it("Deve fazer login com sucesso", () => {
-        cy.get('#username').type(perfil.userName)
-        cy.get('#password').type(perfil.password)
-        cy.get('.woocommerce-form > .button').click()
-        
+    it("Deve fazer login com sucesso - Usando arquivo de dados - Usando comando customizado", () => {
+        cy.login(perfil.userName, perfil.password)
         cy.get('.page-title').should("contain", "Minha conta")
         cy.get('.topbar-inner > :nth-child(1) > .list-inline > :nth-child(2) > a').should("contain", "Logout")
     })
-
-    it("Deve fazer login com sucesso usando fixture", () => {
+    
+    it("Deve fazer login com sucesso - Usando fixture", () => {
         cy.fixture("perfil").then(data => 
             {
                 cy.get('#username').type(data.userName)
-                cy.get('#password').type(data.password)
+                cy.get('#password').type(data.password, {log: false})
                 cy.get('.woocommerce-form > .button').click()
                 
                 cy.get('.page-title').should("contain", "Minha conta")
