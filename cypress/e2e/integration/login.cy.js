@@ -20,6 +20,18 @@ context("Funcionalidade Login", () => {
         cy.get('.topbar-inner > :nth-child(1) > .list-inline > :nth-child(2) > a').should("contain", "Logout")
     })
 
+    it("Deve fazer login com sucesso usando fixture", () => {
+        cy.fixture("perfil").then(data => 
+            {
+                cy.get('#username').type(data.userName)
+                cy.get('#password').type(data.password)
+                cy.get('.woocommerce-form > .button').click()
+                
+                cy.get('.page-title').should("contain", "Minha conta")
+                cy.get('.topbar-inner > :nth-child(1) > .list-inline > :nth-child(2) > a').should("contain", "Logout")
+            })
+    })
+
     it("Deve exibir uma mensagem de erro ao inserir usuário inválido", () => {
         cy.get('#username').type("erro@teste.com")
         cy.get('#password').type("erro@teste")
